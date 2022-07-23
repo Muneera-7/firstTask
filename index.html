@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>speech to text app</title>
+    <style>
+        .output{
+            display: block;
+            width:60%;
+            height: 200%;
+            margin: 20px auto;
+        }
+    </style>
+</head>
+<body>
+    <button class="btn-start">start recording</button>
+    <button class="btn-end">end recording</button>
+    <textarea class="output"></textarea>
+    <script>
+    class SpeechRecognitionAPI{
+        constructor(options){
+            const SpeechToText = window.speechRecognition || window.webkitSpeechRecognition;
+            this.speechApi =  new SpeechToText();
+            this.options.output ? options.options : document.createElement("div");
+            this.speechApi.continous = true;
+            this.speechApi.interinResult = false;
+            this.speechApi.onresult = (event) => {
+                var resultIndex = event.resultIndex;
+                var transcrip = event[resultIndex][0].transcript;
+                this.output.textContent = transcript;
+    
+            }
+        }
+        init(){
+            this.speechApi.start();
+        }
+        stop(){
+            this.speechApi.stop();
+        }
+    }
+    window.onload = function (){
+        var speech = new SpeechRecognitionAPI({
+            output:document.querySelector(".output");
+        })
+        document.querySelector(".btn-start").addEventListener("click", () =>{
+            speech.init();
+    
+        })
+        document.querySelector(".btn-end").addEventListener("click", () => {
+            speech.stop();
+        })
+    }
+</script>
+</body>
+</html>
